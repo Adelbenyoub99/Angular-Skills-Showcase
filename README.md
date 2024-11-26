@@ -1,3 +1,13 @@
+# Angular Skills Showcase  
+## Description  
+This project highlights my Angular skills acquired during my certification. It includes practical demonstrations of key concepts and features of the Angular framework.
+
+# Features
+- Examples of dynamic interfaces with Angular
+- Management of components, services, and routing
+- Use of forms, directives, and pipes
+- Integration with a REST API for data management
+
 # Labonneaffaire
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
@@ -25,3 +35,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+
