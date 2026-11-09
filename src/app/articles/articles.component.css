@@ -1,13 +1,24 @@
-articleInfo{
-    width: 18rem;
+.article-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  border-radius: 12px;
 }
-.noLike{
-    background-color: blue;
-    color: white;
+
+.article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
 }
-.show{
-    display: inline-block;
+
+.article-thumb {
+  height: 200px;
+  object-fit: cover;
+  background-color: #e9ecef;
 }
-.hidden{
-    display: none;
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.6rem;
 }

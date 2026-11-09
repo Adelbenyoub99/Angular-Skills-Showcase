@@ -1,17 +1,73 @@
-      <!-- Main content -->
-      <div class="container">
-        <div id="alertMsg">
-           <p>{{message}}</p>
-        </div>
-        <div id="home">
-        <app-articles 
-        *ngFor="let element of liste" 
-        [titreArticle]="element.titreArticle" 
-        [prixArticle]="element.prixArticle" 
-        [description]="element.description"
-        [urlImg]="element.urlImg"
-        [textAltImg]="element.textAltImg"
-        [dispo]="element.dispo"
-        (info)="onAffiche($event)"></app-articles>
+<div class="container">
+  <!-- En-tête / Hero section -->
+  <div class="bg-white rounded-3 p-4 p-md-5 mb-4 shadow-sm border">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h1 class="display-6 fw-bold mb-2">Petites annonces entre particuliers</h1>
+        <p class="text-muted mb-0">
+          Démonstrateur Angular 17 Standalone avec architecture par composants réactifs, RxJS et formulaires validés.
+        </p>
+      </div>
+      <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+        <a routerLink="/ajouter" class="btn btn-primary btn-lg shadow-sm">
+          + Publier une annonce
+        </a>
       </div>
     </div>
+
+    <!-- Barre de recherche -->
+    <div class="mt-4 pt-3 border-top">
+      <div class="input-group">
+        <span class="input-group-text bg-light">🔍</span>
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          placeholder="Rechercher par mot-clé (vélo, macbook, tv, etc.)..."
+          [(ngModel)]="searchTerm">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          *ngIf="searchTerm"
+          (click)="searchTerm = ''">
+          Effacer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message de feedback dynamique -->
+  <div *ngIf="feedbackMessage" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+    <span>💡 {{ feedbackMessage }}</span>
+    <button type="button" class="btn-close" (click)="feedbackMessage = ''" aria-label="Fermer"></button>
+  </div>
+
+  <!-- Grille des articles -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="filteredArticles.length > 0; else emptyState">
+    <div class="col" *ngFor="let item of filteredArticles">
+      <app-articles
+        [idArticle]="item.id"
+        [titreArticle]="item.titreArticle"
+        [prixArticle]="item.prixArticle"
+        [description]="item.description"
+        [urlImg]="item.urlImg"
+        [textAltImg]="item.textAltImg"
+        [dispo]="item.dispo"
+        [totalNbrLike]="item.totalNbrLike || 0"
+        (info)="onAffiche($event)"
+        (likeToggled)="onLikeToggled($event)">
+      </app-articles>
+    </div>
+  </div>
+
+  <!-- État vide si aucun résultat -->
+  <ng-template #emptyState>
+    <div class="text-center py-5 bg-white rounded-3 border">
+      <div class="fs-1 mb-2">🔎</div>
+      <h4 class="fw-bold">Aucune annonce ne correspond à votre recherche</h4>
+      <p class="text-muted">Essayez un autre terme ou réinitialisez le filtre de recherche.</p>
+      <button class="btn btn-outline-primary" (click)="searchTerm = ''">
+        Voir toutes les annonces
+      </button>
+    </div>
+  </ng-template>
+</div>

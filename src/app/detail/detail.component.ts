@@ -1,30 +1,46 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DataService } from '../data.service';
-import { ActivatedRoute } from '@angular/router';
-import { __param } from 'tslib';
-
+import { Article } from '../models/article.model';
 
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './detail.component.html',
-  styleUrl: './detail.component.css'
+  styleUrls: ['./detail.component.css']
 })
-export class DetailComponent implements OnInit{
+export class DetailComponent implements OnInit {
+  article?: Article;
+  id?: number;
+  contactSent: boolean = false;
 
-  id; 
-  titre: string;
-  prix: number;
-  description: string;
-  urlImg: string;
-constructor(private route: ActivatedRoute, private dataservice: DataService){}
-ngOnInit(): void {
-  const id = this.route.snapshot.params["id"];
-  this.id = id;
-  this.titre = this.dataservice.getArticle(id).titreArticle;
-  this.prix = this.dataservice.getArticle(id).prixArticle;
-  this.description = this.dataservice.getArticle(id).description;
-  this.urlImg = this.dataservice.getArticle(id).urlImg;
-}
+  constructor(
+    private route: ActivatedRoute,
+    private dataService: DataService
+  ) {}
+
+  ngOnInit(): void {
+    const rawId = this.route.snapshot.paramMap.get('id');
+    if (rawId) {
+      this.id = Number(rawId);
+      this.article = this.dataService.getArticle(this.id);
+    }
+  }
+
+  onLike(): void {
+    if (this.article) {
+      this.dataService.toggleLike(this.article.id, true);
+      // Synchronise la vue locale
+      this.article = this.dataService.getArticle(this.article.id);
+    }
+  }
+
+  onContactSeller(): void {
+    this.contactSent = true;
+    setTimeout(() => {
+      this.contactSent = false;
+    }, 4000);
+  }
 }

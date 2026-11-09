@@ -1,16 +1,25 @@
 import { TestBed } from '@angular/core/testing';
-
+import { provideHttpClient } from '@angular/common/http';
 import { DataService } from './data.service';
 
 describe('DataService', () => {
   let service: DataService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient()]
+    });
     service = TestBed.inject(DataService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should have initial seed articles', (done) => {
+    service.getArticles().subscribe((articles) => {
+      expect(articles.length).toBeGreaterThan(0);
+      done();
+    });
   });
 });

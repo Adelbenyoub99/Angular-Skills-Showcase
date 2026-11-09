@@ -1,58 +1,39 @@
-import { outputAst } from '@angular/compiler';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
 
 @Component({
   selector: 'app-articles',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.css'],
-
+  styleUrls: ['./articles.component.css']
 })
-export class ArticlesComponent implements OnInit {
+export class ArticlesComponent {
+  @Input() idArticle: number = 0;
+  @Input() titreArticle: string = '';
+  @Input() prixArticle: number = 0;
+  @Input() description: string = '';
+  @Input() urlImg: string = '';
+  @Input() textAltImg: string = '';
+  @Input() dispo: boolean = true;
+  @Input() totalNbrLike: number = 0;
 
-totalNbrLike: number = 0;
-comment: string = "Ceci est un commentaire";
-@Output () info = new EventEmitter<string>();
+  @Output() info = new EventEmitter<string>();
+  @Output() likeToggled = new EventEmitter<{ id: number; liked: boolean }>();
 
+  jaime: boolean = false;
+  comment: string = '';
 
-@Input () titreArticle: string;
-@Input () prixArticle: number;
-@Input () description: string;
-@Input () urlImg: string;
-@Input () textAltImg: string;
-@Input () dispo: boolean;
-@Input () idArticle: number;
-jaime: boolean = true;
-
-constructor() {}
-ngOnInit(): void {
-
-}
-
-  onLike(){
-    if(this.jaime === true) {
+  onLike(): void {
+    this.jaime = !this.jaime;
+    if (this.jaime) {
       this.totalNbrLike++;
-      this.jaime = false;
     } else {
-      this.totalNbrLike--;
-      this.jaime = true;
+      this.totalNbrLike = Math.max(0, this.totalNbrLike - 1);
     }
-   
-   this.info.emit(this.titreArticle);
-
-  }
-
-  getColor(){
-    if(this.dispo === true){
-       return "green"
-    } else {
-       return "red"
-    }
-
+    this.likeToggled.emit({ id: this.idArticle, liked: this.jaime });
+    this.info.emit(this.titreArticle);
   }
 }

@@ -1,6 +1,81 @@
-<div id="infoDetail" class="container">
-<img [src]="urlImg">
-<h1> {{ titre }}</h1>
-<h3> {{ prix }}</h3>
-<p>{{ description }}</p>
+<div class="container py-3">
+  <!-- Fil d'Ariane -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none">Catalogue</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ article ? article.titreArticle : 'Détail' }}</li>
+    </ol>
+  </nav>
+
+  <!-- Vue article trouvé -->
+  <div *ngIf="article; else notFound" class="card shadow-sm border-0 rounded-3 overflow-hidden">
+    <div class="row g-0">
+      <!-- Image produit -->
+      <div class="col-md-6 bg-light d-flex align-items-center justify-content-center p-3">
+        <img
+          [src]="article.urlImg"
+          [alt]="article.textAltImg || article.titreArticle"
+          class="img-fluid rounded-3 detail-img shadow-sm">
+      </div>
+
+      <!-- Détails produit -->
+      <div class="col-md-6 d-flex flex-column p-4 p-md-5">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <span class="badge px-3 py-2 fs-6" [ngClass]="article.dispo ? 'bg-success' : 'bg-secondary'">
+            {{ article.dispo ? '✅ Disponible immédiatement' : '⏳ Actuellement réservé' }}
+          </span>
+          <span class="text-muted small">Réf #{{ article.id }}</span>
+        </div>
+
+        <h1 class="h2 fw-bold text-dark mb-3">{{ article.titreArticle }}</h1>
+
+        <div class="d-flex align-items-baseline gap-2 mb-4">
+          <span class="display-6 fw-bold text-primary">{{ article.prixArticle }} €</span>
+          <span class="text-muted small">TTC / Paiement sécurisé</span>
+        </div>
+
+        <div class="mb-4">
+          <h5 class="fw-semibold text-secondary mb-2">Description</h5>
+          <p class="text-secondary lh-base">{{ article.description }}</p>
+        </div>
+
+        <!-- Alerte contact -->
+        <div *ngIf="contactSent" class="alert alert-success d-flex align-items-center gap-2 mb-3" role="alert">
+          <span>📨</span>
+          <div>Votre message a été transmis au vendeur avec succès.</div>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex flex-wrap gap-2 mt-auto pt-3 border-top">
+          <button
+            type="button"
+            class="btn btn-primary px-4 py-2 fw-semibold"
+            (click)="onContactSeller()">
+            💬 Contacter le vendeur
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger px-3 py-2"
+            (click)="onLike()">
+            ❤️ Coup de cœur ({{ article.totalNbrLike || 0 }})
+          </button>
+          <a routerLink="/" class="btn btn-outline-secondary px-3 py-2">
+            &larr; Retour
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vue article non trouvé -->
+  <ng-template #notFound>
+    <div class="text-center py-5 bg-white rounded-3 border p-5">
+      <div class="fs-1 mb-3">🔍</div>
+      <h3 class="fw-bold">Article introuvable</h3>
+      <p class="text-muted">L'annonce numéro #{{ id }} n'existe pas ou a été supprimée.</p>
+      <a routerLink="/" class="btn btn-primary mt-2">
+        Retourner au catalogue des annonces
+      </a>
+    </div>
+  </ng-template>
 </div>

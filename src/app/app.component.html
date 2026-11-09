@@ -1,45 +1,50 @@
-      <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">La bonne affaire</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <span class="fs-4">🛍️</span>
+      <span class="fw-bold">La Bonne Affaire</span>
+      <span class="badge bg-primary text-uppercase" style="font-size: 0.65rem; letter-spacing: 0.5px;">Angular 17</span>
+    </a>
 
-          <div class="collapse navbar-collapse" id="navbarsExample02">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-              </li>
-            </ul>
-            <form role="search">
-              <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            </form>
-          </div>
-        </div>
-      </nav>
-      <div style="text-align: center; padding-top: 2%; font-size: 1.5rem;">
-        <p>{{ secondes }}</p>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="bi bi-grid-fill me-1"></i>Catalogue
+          </a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-3">
+        <a class="btn btn-primary btn-sm d-flex align-items-center gap-1 shadow-sm" routerLink="/ajouter" routerLinkActive="active">
+          <span>+</span>
+          <span>Déposer une annonce</span>
+        </a>
       </div>
-      <router-outlet></router-outlet>
+    </div>
+  </div>
+</nav>
 
-      <!-- Footer -->
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top container">
-        <p class="col-md-4 mb-0 text-body-secondary">&copy; La bonne affaire</p>
-        <ul class="nav col-md-4 justify-content-end">
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-        </ul>
-      </footer>
-    
+<main class="main-wrapper py-4">
+  <router-outlet></router-outlet>
+</main>
 
+<footer class="footer bg-light border-top mt-auto py-4">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="d-flex align-items-center gap-2">
+      <span class="fw-bold text-dark">La Bonne Affaire</span>
+      <span class="text-muted small">&mdash; Showcase Angular 17 Standalone &amp; RxJS</span>
+    </div>
+    <div class="d-flex align-items-center gap-2 small text-muted">
+      <span>Framework : Angular 17</span>
+      <span>&bull;</span>
+      <span>State : RxJS BehaviorSubject</span>
+      <span>&bull;</span>
+      <span>UI : Bootstrap 5</span>
+    </div>
+  </div>
+</footer>
