@@ -8,3 +8,4 @@ export interface Article {
   dispo: boolean;
   totalNbrLike?: number;
 }
+
